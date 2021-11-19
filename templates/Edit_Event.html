@@ -1,0 +1,48 @@
+{% extends "navbar_Template.html" %}
+{% load static %}
+
+{% block head_content_1 %}
+    <title>Edit Event</title>
+
+
+    <link href="{% static 'todo/css/form.css' %}" rel="stylesheet">  
+{% endblock head_content_1 %}
+
+{% block content_1 %}
+
+        
+        <!-- Edit Event Form-->
+        <div class="row">
+             <div class="column side">
+             </div>
+             <div class="column middle">
+                 <form class="form-horizontal" action="{% url 'Edited' Prime_Event.id %}" method="POST" role="form">
+                    {% csrf_token %}
+                        <h3>Edit the Event</h3><br>
+                        <div class="main-content"> 
+                            <div class="form-group">
+                                <label  for="name">Name:</label>
+                                <input type="text" id="name" placeholder="Enter name" name="Name" value="{{ Prime_Event.Name }}" style="width: 220px" required >
+                            </div><br>
+
+                            <div class="form-group">
+                                <label for="location">Location:</label>          
+                                <input type="text" id="Location" placeholder="Enter location" name="Location" value="{{ Prime_Event.Location }}" style="width: 220px" required >
+                            </div><br>
+
+                            <div class="form-group">
+                                <label  for="DateTime">Date & Time:</label>        
+                                <input type="datetime-local" name="DateTime" value="{{ Prime_Event.date_time }}" style="width: 220px" required >
+                            </div><br>
+
+                            <div class="form-group" style="text-align: center;">        
+                                <button type="submit" class="btn btn-primary">EDIT</button>
+                            </div><br>
+                        </div>
+                </form>
+            </div>
+
+            <div class="column side">
+            </div>
+        </div>
+{% endblock content_1 %}

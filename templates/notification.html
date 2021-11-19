@@ -1,0 +1,69 @@
+{% extends "navbar_Template.html" %}
+{% load static %}
+
+{% block head_content_1 %}
+
+	<title>Notifications</title>
+    <style>
+        h2{
+            text-align: center;
+        }
+        .row{
+            margin-top: 5%;
+        }
+        .card{
+            border-radius: 8px;
+        }
+        .card:hover{
+            box-shadow: 0 20px 70px rgba(0, 0, 0, 0.55);
+        }
+        .card-body{
+            text-align: center;
+        }
+    </style>
+{% endblock head_content_1 %}
+
+<!--Displaying Notification if there are any (notifications are counted)-->
+{% block content_1 %}
+    <div class="row">
+        <div class="col-md">
+        </div>
+        <div class="col-md-6" style="margin-top: 80px;">
+            <div class="card">
+                <div class="card-body">
+                    <div class="container">
+                        {% if count > 0 %}
+                            {% for Event in order_list %}
+                                <h5>Dear {{ user.username }}, Your Event: "{{ Event.Name }}"  at {{ Event.date_time }} is Under 1 hour!</h5>
+                                {% endfor %}
+                        {% else %}
+                            <h5>You have no events in the next 1 hour! </h5>
+                        {% endif %}
+                    </div>
+
+                    <div class="container">
+                        {% if primarycount > 0 %}
+                            {% for Shared_Event in order_list2 %}
+                                <h5>Dear {{ Shared_Event.user.username }}, Your Event: "{{ Shared_Event.Name }}"  at {{ Shared_Event.date_time }} with {{ Shared_Event.secondary_user.username }} is Under 1 hour!</h5>
+                                {% endfor %}
+                        {% else %}
+                            <h5>You have no events where you invited someone in the next 1 hour! </h5>
+                        {% endif %}
+                    </div>
+
+                    <div class="container">
+                        {% if secondarycount > 0 %}
+                            {% for Shared_Event in order_list3 %}
+                                <h5>Dear {{ Shared_Event.secondary_user.username }}, Your Event: "{{ Shared_Event.Name }}"  at {{ Shared_Event.date_time }} with {{ Shared_Event.user.username }} is Under 1 hour!</h5>
+                                {% endfor %}
+                        {% else %}
+                            <h5>You have no events where you were invited to in the next 1 hour! </h5>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md">
+        </div>
+    </div>
+{% endblock content_1 %}

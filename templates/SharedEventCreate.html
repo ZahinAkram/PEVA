@@ -1,0 +1,56 @@
+{% extends "navbar_Template.html" %}
+{% load static %}
+
+{% block head_content_1 %}
+    <title>Shared Event Create</title>
+
+    <link href="{% static 'todo/css/form.css' %}" rel="stylesheet">   
+{% endblock head_content_1 %}
+
+{% block content_1 %}
+
+    <div class="row">
+         <div class="column side">
+         </div>
+         <div class="column middle">
+             <form class="form-horizontal" action="{% url 'sharedadd' %}" method="POST" role="form">
+                {% csrf_token %}
+                    <h3>Create Shared Event</h3><br>
+                    <div class="main-content">
+                        <div class="form-group">
+                            <label  for="name">Name:</label>
+                            <input type="text" id="name" placeholder="Enter name" name="Name" style="width: 220px" required >
+                        </div><br>
+
+                        <div class="form-group">
+                            <label for="location">Location:</label>
+                            <input type="text" id="Location" placeholder="Enter location" name="Location" style="width: 220px" required >
+                        </div><br>
+
+                        <div class="form-group">
+                            <label  for="DateTime">Date & Time:</label>
+                            <input type="datetime-local" name="DateTime" style="width: 220px" required >
+                        </div><br>
+
+                        <div class="input-group">
+                            <label for="user2"> Shared User Name:</label>
+                            <select class="form-control custom-select" id="user2" name="user2" style="max-width: 220px">
+                                <option selected>Choose...</option>
+                                {% for User in secondary_user %}
+                                    <option value="{{ User.id }}" name="user3">{{ User.username }}</option>
+                                {% endfor %}
+                            </select>
+                        </div><br>
+
+                        <div class="form-group" style="text-align: center;">       
+                            <button type="submit" class="btn btn-primary">ADD</button>
+                        </div><br>
+                    </div>
+            </form>
+        </div>
+
+        <div class="column side">
+        </div>
+    </div>
+
+{% endblock content_1 %}

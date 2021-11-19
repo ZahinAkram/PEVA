@@ -1,0 +1,168 @@
+{% extends "navbar_Template.html" %}
+{% load static %}
+
+{% block head_content_1 %}
+
+        <title>History of Events</title>
+
+        <link rel="stylesheet" type="text/css" href="{% static 'todo/table design_files/animate/animate.css' %}">
+
+        <link rel="stylesheet" type="text/css" href="{% static 'todo/table design_files/select2/select2.min.css' %}">
+
+        <link rel="stylesheet" type="text/css" href="{% static 'todo/table design_files/perfect-scrollbar/perfect-scrollbar.css' %}">
+
+        <link rel="stylesheet" type="text/css" href="{% static 'todo/css/util.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'todo/css/main.css' %}">
+        <style type="text/css">
+            body{
+                margin: 100px;
+            }
+            h2{
+                text-align: center;
+                margin: 10px;
+            }
+            table{
+                box-shadow: 0 20px 70px rgba(0, 0, 0, 0.55);
+            }
+        </style>
+
+{% endblock head_content_1 %}
+
+{% block content_1 %}
+        <!-- Shows Events for user only-->
+        <div class="limiter">
+            <div class="container-table100">
+                <div class="wrap-table100">
+                    <h2>Events listed by {{user.username}}</h2>
+                    <div class="table100">
+                        <table>
+                            <thead>
+                                <tr class="table100-head">
+                                    <th class="column1">Name</th>
+                                    <th class="column2">Location</th>
+    								<th class="column3">Date and Time</th>
+                                    <th class="column4">Status</th>
+                                </tr>
+                            </thead>
+                                <tbody>
+                                    {% for Event in UserEvents %}
+                                        <tr>
+                                            <td class="column1">{{Event.Name}}</td>
+                                            <td class="column2">{{Event.Location}}</td>
+                                            <!--Removed Previous Output of seperate Date and Time-->
+        									<td class="column3">{{Event.date_time}}</td>
+                                        {% if Event.complete %} <!-- Checks status and outputs accordingly-->
+                                            <td class="column4">Event Done</td>
+                                        {% else %}
+                                            <td class="column4">Event Not Done</td>
+                                        {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                    </table><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         <!--Shows Events History where current user was the one who invited-->
+        <div class="container-table100">
+            <div class="wrap-table100">
+            <h2>Shared Events listed by {{user.username}}</h2>
+                {% if PrimaryCount > 0%}
+                    <table>
+                        <thead>
+                            <tr class="table100-head">
+                                <th class="column1">Name</th>
+                                <th class="column2">Location</th>
+                                <th class="column3">Date and Time</th>
+                                <th class="column4">Invited User</th>
+                                <th class="column5">Invited User Status</th>
+                                <th class="column6">Status</th>
+                            </tr>
+                        </thead>
+                            <tbody>
+                                <!-- Current user is primary user here and inited are secondary users-->
+                                {% for Shared_Event in UserPrimary %}
+                                <tr>
+                                    <td class="column1">{{Shared_Event.Name}}</td>
+                                    <td class="column2">{{Shared_Event.Location}}</td>
+                                    <!--Removed Previous Output of seperate Date and Time-->
+                                    <td class="column3">{{Shared_Event.date_time}}</td>
+                                    <td class="column4">{{Shared_Event.secondary_user.username}}</td>
+                                    {% if Shared_Event.complete2 %}
+                                        <td class="column5">Event Done by {{ Shared_Event.secondary_user.username }}</td>
+                                     {% else %}
+                                        <td class="column5">Event Not Done by {{ Shared_Event.secondary_user.username }}</td>
+                                    {% endif %}
+                                    {% if Shared_Event.complete %}
+                                        <td class="column6">Event Done</td>
+
+
+                                    {% else %}
+                                        <td class="column6">Event Not Done</td>
+                                    {% endif %}
+
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                    </table><br>
+            </div>
+                {% else %}
+                    <p>No History for Shared Events to Show.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Shows History of Events where current user was invited-->
+        <div class="container-table100">
+            <div class="wrap-table100">
+                <h2>Shared Events you were invited to {{user.username}}</h2>
+                {% if SecondaryCount > 0%}
+                    <table>
+                        <thead>
+                            <tr class="table100-head">
+                                <th class="column1">Name</th>
+                                <th class="column2">Location</th>
+                                <th class="column3">Date and Time</th>
+                                <th class="column4">Invited By</th>
+                                <th class="column5">Invited Persons Status </th>
+                                <th class="column6">Status</th>
+                                <th class="column8"></th>
+                            </tr>
+                        </thead>
+                            <tbody>
+                                <!-- Current user is secondary user here and primary are those who invited User-->
+                                {% for Shared_Event in UserSecondary %}
+                                <tr>
+                                    <td class="column1">{{Shared_Event.Name}}</td>
+                                    <td class="column2">{{Shared_Event.Location}}</td>
+                                    <!--Removed Previous Output of seperate Date and Time-->
+                                    <td class="column3">{{Shared_Event.date_time}}</td>
+                                    <td class="column4">{{Shared_Event.user.username}}</td>
+                                    {% if Shared_Event.complete %}
+                                        <td class="column5">Event Done by {{ Shared_Event.user.username }}</td>
+                                    {% else %}
+                                        <td class="column5">Event Not Done by {{ Shared_Event.user.username }}</td>
+                                    {% endif %}
+                                    {% if Shared_Event.complete2 %}
+                                        <td class="column6">Event Done</td>
+                                    {% else %}
+                                        <td class="column6">Event Not Done</td>
+                                    {% endif %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                    </table><br>
+            </div>
+                {% else %}
+            <p>No History for Events you were invited.</p>
+            {% endif %}
+    </div>
+
+
+        <script src="{% static 'todo/table design_files/select2/select2.min.js' %}"></script>
+
+        <script src="{% static 'todo/js/main.js"></script>
+
+{% endblock content_1 %}

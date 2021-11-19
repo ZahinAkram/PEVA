@@ -1,0 +1,119 @@
+{% extends "navbar_Template.html" %}
+{% load static %}
+
+{% block head_content_1 %}
+	<link rel="icon" type="image/png" href="{% static 'todo/images/icons/favicon.ico' %}"/>
+
+	<title>Home</title>
+    <style>
+        h2{
+            text-align: center;
+        }
+        .row{
+            margin-top: 5%;
+        }
+        .card{
+            border-radius: 8px;
+        }
+        .card:hover{
+            box-shadow: 0 20px 70px rgba(0, 0, 0, 0.55);
+        }
+        .card-body{
+            text-align: center;
+        }
+    </style>
+{% endblock head_content_1 %}
+
+
+
+{% block content_1 %}
+    <!--Using grid system and cards in Bootstrap to design home page-->
+        <div class="container" style="margin-top: 5%;padding: 20px;">
+        	{% if user.is_authenticated %}   <!--Checking weather the user is logged in or not-->
+                <h2>Welcome&ensp;{{ user.username }}</h2>
+                    <div class="row">
+                        <div class="col-md">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Create Events</h5>
+                                        <p class="card-text">Make Events for yourself. You can change them later!</p>
+                                    <a href="{% url 'EventCreate' %}"><button class="w3-button w3-white w3-border w3-round-xlarge">Create</button></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md">        
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">See your Current Events</h5>
+                                        <p class="card-text">See all the events you are involved in from today onwards!
+                                        Here you can Mark them as done or not done and edit them! You can also delete by
+                                        clicking on the Cross Mark!</p>
+                                    <a href="{% url 'SeeEvent' %}"><button class="w3-button w3-white w3-border w3-round-xlarge">Check</button></a>
+                                  </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Create Events with other Users!</h5>
+                                        <p class="card-text">Make Events with other user. But they might delete that Event!</p>
+                                    <a href="{% url 'CreateSharedEvent' %}"><button class="w3-button w3-white w3-border w3-round-xlarge">Create</button></a>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md">
+                        </div>
+                        <div class="col-md">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Check Previous Events</h5>
+                                        <p class="card-text">See all the Events upto today!</p>
+                                    <a href="{% url 'EventHistory' %}"><button class="w3-button w3-white w3-border w3-round-xlarge">Check</button></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md">
+                        </div>
+                    </div>      
+                {% if count > 0 %}
+                    <div style="color: red;font-weight: bold;margin-top: 20px;text-align: center;">You have some Events in the next one hour!.</div>
+                {% endif %}
+                    
+        	{% else %}
+                <div class="row">
+                    <div class="col-md">
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Please Login to visit out website.</h5>
+                                    <p class="card-text"></p>
+                                <a href="{% url 'login' %}"><button class="btn btn-primary">Log in</button></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md">
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Don't have an account,Sign up.</h5>
+                                    <p class="card-text"></p>
+                                <a href="{% url 'signup' %}"><button class="btn btn-primary">Register</button></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md">
+                    </div> 
+                </div>
+        	{% endif %}
+        </div> 
+{% endblock content_1 %}

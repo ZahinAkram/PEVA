@@ -1,0 +1,20 @@
+{% extends "navbar_Template.html" %}
+{% load static %}
+
+{% block head_content_1 %}
+	<title>Account</title>
+	<style>
+        body{
+            background-image: none;
+            background-color: white;
+            margin: 100px;
+        }
+    </style>
+{% endblock head_content_1 %}
+
+
+{% block content_1 %}
+	User Name: {{ user.username }}<br>
+    E-mail: {{ user.email }}<br>
+    <a href="{% url 'changepassword' %}"> Change Password</a><br>
+{% endblock content_1 %}
